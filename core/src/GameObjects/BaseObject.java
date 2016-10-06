@@ -6,10 +6,12 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.mygdx.game.GameProj1;
 
 import DamageNumber.DNManager;
 import DamageNumber.DamageNumber;
+import Skills.BaseSkill;
 
 public class BaseObject {
 	
@@ -33,6 +35,8 @@ public class BaseObject {
 	public Rectangle bar;
 	public Rectangle hpBar;
 	
+	public Array<BaseSkill> skills;
+	
 	public BaseObject(float x, float y, float angle){
 		this.pos = new Vector2(x,y);
 		this.vel = new Vector2();
@@ -49,6 +53,7 @@ public class BaseObject {
 		this.isDead = false;
 		
 		this.sr = new ShapeRenderer();
+		this.skills = new Array<>();
 	}
 	
 	public void update(float delta){

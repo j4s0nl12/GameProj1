@@ -10,6 +10,7 @@ import com.mygdx.game.GameProj1;
 import GameObjects.BaseObject;
 import Skills.BaseSkill;
 import Skills.Flamethrower;
+import Skills.TimeLapse;
 
 public class Player extends BaseObject{
 	
@@ -17,18 +18,18 @@ public class Player extends BaseObject{
 	
 	public boolean isMovingX;
 	public boolean isMovingY;
-	
-	public BaseSkill skill1;
 
 	public Player(float x, float y, float angle) {
 		super(x, y, angle);
 		this.sprite = new Sprite(new Texture(spriteFile));
-		this.skill1 = new Flamethrower(this);
+		this.skills.add(new Flamethrower(this));
+		this.skills.add(new TimeLapse(this));
 	}
 	
 	public void update(float delta){
 		super.update(delta);
-		this.skill1.update(delta);
+		for(BaseSkill s : this.skills)
+			s.update(delta);
 		
 		if(this.vel.x != 0 && !this.isMovingX)
 			this.frictionX(this.frict, delta);
@@ -73,11 +74,20 @@ public class Player extends BaseObject{
 			this.isMovingX = true;
 		}
 		if(Gdx.input.isTouched()){
-			this.skill1.skillActive();
+			this.skills.get(0).skillActive();
+		}
+		if(Gdx.input.isKeyPressed(Keys.E)){
+			this.skills.get(1).skillActive();
 		}
 		
 		if(Gdx.input.isKeyPressed(Keys.R)){
-			this.skill1.setCheats(true);
+			this.skills.get(0).setCheats(true);
+		}
+		if(Gdx.input.isKeyPressed(Keys.T)){
+			this.skills.get(1).setCheats(true);
+		}
+		if(Gdx.input.isKeyPressed(Keys.NUM_1)){
+			this.hp -= 10;
 		}
 	}
 	

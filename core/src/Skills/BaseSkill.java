@@ -11,6 +11,8 @@ public class BaseSkill {
 
 	BaseObject skillOwner;
 	
+	public int ammo;
+	
 	public BaseSkill(BaseObject owner){
 		this.skillOwner = owner;
 	}

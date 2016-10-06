@@ -17,8 +17,7 @@ public class Flamethrower extends BaseSkill {
 	public ProjectileManager pm;
 	private Vector2 offset;
 	
-	public float fuel;
-	public float fuelMax;
+	public int fuelMax;
 	
 	public BitmapFont font;
 	public String str;
@@ -33,14 +32,14 @@ public class Flamethrower extends BaseSkill {
 		super(owner);
 		this.pm = new ProjectileManager();
 		this.offset = new Vector2(40f, 40f);
-		this.fuelMax = 600f;
-		this.fuel = this.fuelMax;
+		this.fuelMax = 600;
+		this.ammo = this.fuelMax;
 		this.noClip = false;
 		
 		this.x = GameProj1.GAME_WORLD_WIDTH * 9 / 10;
 		this.y = GameProj1.GAME_WORLD_HEIGHT / 10;
 		this.textColor = new Color(1f,1f,1f,1);
-		this.str = "Fuel: " + this.fuel + "/" + this.fuelMax;
+		this.str = "Fuel: " + this.ammo + "/" + this.fuelMax;
 		this.font = new BitmapFont();
 		GlyphLayout layout = new GlyphLayout();
 		layout.setText(this.font, this.str);
@@ -58,14 +57,14 @@ public class Flamethrower extends BaseSkill {
 	public void render(){
 		GameProj1.batch.begin();
 		this.font.setColor(this.textColor);
-		this.str = "Fuel: " + this.fuel + "/" + this.fuelMax;
+		this.str = "Fuel: " + this.ammo + "/" + this.fuelMax;
 		this.font.draw(GameProj1.batch, this.str, this.x - this.offsetX, this.y);
 		GameProj1.batch.end();
 	}
 	
 	@Override
 	public void skillActive(){
-		if(this.fuel > 0 || this.noClip)
+		if(this.ammo > 0 || this.noClip)
 			this.fire();
 	}
 	
@@ -79,11 +78,12 @@ public class Flamethrower extends BaseSkill {
 		this.pm.add(new Flame(this.skillOwner, this.skillOwner.pos.cpy().add(this.offset), 
 					this.getMousePos().add(tmp)));
 		if(!this.noClip)
-			this.fuel--;
+			this.ammo--;
 	}
 	
 	@Override
 	public void setCheats(boolean b){
+		System.out.println("[Flamethrower]: No Clip On!");
 		this.noClip = true;
 	}
 }
